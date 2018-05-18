@@ -1,0 +1,121 @@
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyATTpBUEZi5-hU-cCTlzAbThG0sVFszouU"></script>
+<div class="bg"></div>
+<div align="left" class="container">
+    <form action="/search" method="get">
+    <div class="columns is-gapless  is-mobile">
+        <div class="field column is-narrow">
+                <div class="control">
+                  <div class="select">
+                    <select id="select-category" name="category">
+                      <option value="All">All</option>
+                      <option value="Book">Book</option>
+                      <option value="Furniture">Furniture</option>
+                      <option value="Bike">Bike</option>
+                      <option value="Apartment">Apartment</option>
+                      <option value="Other">Other</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+            <div class="column">
+            <div class="searchbar">
+                <input class="input" type="text" placeholder="Search" name="sitem" value="{{sitem}}">
+        </div>
+        </div>
+        <div class="column is-narrow">
+            <div class="searchbutton">
+                    <button class="button is-primary">
+                    <span class="icon">
+                        <i class="fa fa-search"></i>
+                    </span>
+                    </button>
+            </div>
+        </div>
+    </div>
+    <div class="columns">
+        <div class="column">
+          {{#if sitem}}
+            <p>Showing results for <b>"{{sitem}}"</b></p>
+            {{/if}}
+        </div>
+        <div class="field columns is-1 is-mobile">
+            <label class="label column">Type:</label>
+            <div class="control column">
+                  <div class="select">
+                    <select id="select-sell-type" name="SellType">
+                      <option value="All">All</option>
+                      <option value="Sell">Sell</option>
+                      <option value="Rent">Rent</option>
+                    </select>
+                  </div>
+                </div>
+            <label class="label column">Sort:</label>
+             <div class="control column">
+                  <div class="select">
+                    <select id="select-sort-type" name="SortBy">
+                      <option value="priceA">Price(Low to High)</option>
+                      <option value="priceD">Price(High to Low)</option>
+                      <option value="Date-PostedA">Date Posted(Oldest First)</option>
+                      <option value="Date-PostedB">Date Posted(Newest First)</option>
+                    </select>
+                  </div>
+                </div>
+        </div>
+    </div>
+    </form>
+
+
+{{#if result}}
+<input type="hidden" name="cat" value="{{category}}"/>
+      <div id="map" style="margin-top: 20px; display: none"></div>
+<div align="center" class="resultcard columns is-multiline">
+{{#each result}}
+
+{{#if this.apartment}}
+  <input type="hidden" value="{{this.apartment.location}}" class="apartment-location-for-map"/>
+  <input type="hidden" value="{{this._id}}" class="apartment-id-for-map"/>
+  <input type="hidden" value="{{this.name}}" class="apartment-name-for-map"/>
+  <input type="hidden" value="{{this.img}}" class="apartment-img-for-map"/>
+{{/if}}
+<div class="card">
+<div class="card-image">
+  <figure class="image is-4by3 allListingsImg">
+    <img src="/upload/view/{{this.img}}">
+  </figure>
+</div>
+<div class="card-content">
+  <input type="hidden" name="id" value="{{this._id}}"/>
+  <div class="allListingsName">
+    <h1 class="title is-4">{{this.name}}</h1>
+  </div>
+    {{#if this.rent}}
+    <h1 class="title is-6">${{this.price}} /month</h1>
+    {{else}}
+    <h1 class="title is-6">${{this.price}}</h1>
+    {{/if}}
+    <p>Posted: {{this.newTime}}</p>
+</div>
+<footer class="card-footer">
+  <a href="/product/{{this._id}}" class="card-footer-item">View Product</a>
+</footer>
+</div>
+{{/each}}
+</div>
+{{else}}
+<h1>No results found</h1>
+{{/if}}
+</div>
+
+<!--
+<div class=column is-half>
+  <p>Name: {{this.name}}</p>
+  <img src="/upload/view/{{this.img}}" style="max-height: 400px"/>
+  <p>Price: {{this.price}}</p>
+  <p>Posted By: {{this.posted_by.name}}</p>
+  <img src="{{this.posted_by.picture}}" style="max-height: 50px"/>
+  <p>Date Posted: {{this.posted_at}}</p>
+<br>
+<br>
+    </div>
+-->

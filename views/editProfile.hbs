@@ -1,0 +1,70 @@
+
+<div id="editProfileMainDiv" class="column is-half is-offset-one-quarter">
+<h1 class="header" id="editProfileHeader">Edit Profile</h1>
+  <div>
+    <figure class="image is-128x128" id="profilePicture">
+    <img src={{user.picture}}>
+    </figure>
+  </div>
+
+
+  <div class="field is-horizontal">
+    <div class="field-label is-normal">
+      <label class="label">Name</label>
+    </div>
+    <div class="field-body">
+      <div class="field">
+        <p class="control is-expanded has-icons-left">
+          <input class="input" type="text" placeholder="Name" value="{{result.displayName}}" id="name"required>
+          <span class="icon is-small is-left">
+            <i class="fa fa-user"></i>
+          </span>
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div class="field is-horizontal">
+    <div class="field-label is-normal">
+      <label class="label">Contact Number</label>
+    </div>
+    <div class="field-body">
+      <div class="field is-expanded">
+        <div class="field has-addons">
+          <p class="control is-expanded">
+            <input class="input" type="tel" placeholder="Your phone number"  value="{{result.contactNumber}}" id="contactNumber"required>
+          </p>
+        </div>
+        <p class="help">Do not enter the first zero</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="field is-horizontal">
+    <div class="field-label is-normal">
+      <label class="label">Email</label>
+    </div>
+    <div class="field-body">
+      <div class="field">
+        <div class="control">
+          <input class="input" type="text" placeholder="abc@umn.edu" value="{{result.email}}" id="email" required>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="field is-horizontal">
+    <div class="field-label">
+      <!-- Left empty for spacing -->
+    </div>
+    <div class="field-body">
+      <div class="field">
+        <div class="control">
+          <button class="button is-primary" id="saveEditedProfile">
+            Save
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

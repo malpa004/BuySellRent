@@ -1,0 +1,181 @@
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyATTpBUEZi5-hU-cCTlzAbThG0sVFszouU&callback=initMap"></script>
+
+<div class="container">
+  <div class="columns">
+    <div class="column">
+      <div id="images">
+        <span class="prev-icon icon is-large">
+          <i class="fa fa-3x fa-chevron-circle-left"></i>
+        </span>
+
+        {{#each product.images}}
+          <img class="prod_image" style="display:none" src="/upload/view/{{this}}"/>
+        {{/each}}
+
+        <span class="next-icon icon is-large">
+          <i class="fa fa-3x fa-chevron-circle-right"></i>
+        </span>
+
+    </div>
+
+    {{#if product.apartment}}
+    <h2 class="subtitle">Location:</h2>
+    <div id="map"></div>
+    <input type="hidden" value="{{product.apartment.location}}" id="location"/>
+    <script>
+    function initMap() {
+      var coords = document.getElementById('location').value.split('(')[1].split(')')[0].split(',');
+      var map = new google.maps.Map(document.getElementById('map'), {
+        zoom: 16,
+        center: {lat: parseFloat(coords[0]), lng: parseFloat(coords[1])}
+      });
+      var geocoder = new google.maps.Geocoder();
+
+      var marker = new google.maps.Marker({
+        map: map,
+        position: {lat: parseFloat(coords[0]), lng: parseFloat(coords[1])}
+      });
+    }
+    </script>
+    {{/if}}
+    </div>
+
+    <div class="column">
+      <h1 class="title">{{product.name}}
+           {{#if product.rent}}
+              (For Rent)
+            {{/if}}</h1>
+
+      {{#if product.rent}}
+        <h2>${{product.price}} /month</h2>
+      {{else}}
+        <h2>${{product.price}}</h2>
+      {{/if}}
+
+
+      <div class="columns">
+        <div class="column">
+          <p>Posted by: {{product.posted_by.name}}</p>
+        </div>
+
+        <div class="column">
+          <p id="posted_at">Posted : {{product.newTime}}</p>
+        </div>
+      </div>
+
+{{#if user}}
+      <button class="button is-success" id="contactSellerBtn">Contact Seller</button>
+
+      <div class="modal commentForm" id="contactSeller">
+        <div class="modal-background"></div>
+        <div class="modal-card">
+          <header class="modal-card-head">
+            <p class="modal-card-title">Contact Seller</p>
+            <button class="delete" aria-label="close" id="closeCommentForm"></button>
+          </header>
+          <section class="modal-card-body">
+            <div class="field">
+              <label class="label">Subject:</label>
+              <div class="control has-icons-left has-icons-right">
+                <input class="input " type="text" id="emailSubject" value="Re: {{product.name}}">
+              </div>
+            </div>
+            <div class="control">
+              <label class="label">Message:</label>
+              <textarea class="textarea" placeholder="Textarea" id="emailText">Hi {{product.posted_by.name}} I saw your listing for {{product.name}} on Goldy Shoppy and was really interested in it.</textarea>
+            </div>
+          </section>
+          <footer class="modal-card-foot">
+            <input type="hidden" name="productId" value="{{product._id}}"/>
+            <button class="button is-success" id="sendEmail">Send</button>
+          </footer>
+        </div>
+      </div>
+      {{/if}}
+
+      <h2 class="subtitle">Description:</h2>
+      <p>{{product.description}}</p>
+
+      {{#if product.apartment}}
+      <h2 class="subtitle">Apartment Details:</h2>
+      <table>
+        <tr>
+          <th>Beds</th>
+          <th>Baths</th>
+          <th>Area (sqft)</th>
+        </tr>
+          <td>{{product.apartment.beds}}</td>
+          <td>{{product.apartment.bath}}</td>
+          <td>{{product.apartment.area}}</td>
+        <tr>
+        </tr>
+      </table>
+
+      <div class="columns">
+        <div class="column">
+          Air conditioning:
+          {{#if product.apartment.ac}}
+            <i class="fa fa-check has-text-success"></i>
+          {{else}}
+          <i class="fa fa-times has-text-danger"></i>
+          {{/if}}
+        </div>
+
+        <div class="column">
+          Parking:
+          {{#if product.apartment.parking}}
+            <i class="fa fa-check has-text-success"></i>
+            {{else}}
+            <i class="fa fa-times has-text-danger"></i>
+          {{/if}}
+        </div>
+
+        <div class="column">
+          Pet Friendly:
+          {{#if product.apartment.pets}}
+            <i class="fa fa-check has-text-success"></i>
+            {{else}}
+            <i class="fa fa-times has-text-danger"></i>
+          {{/if}}
+        </div>
+      </div>
+      {{/if}}
+
+      <h2 class="subtitle">Comments:</h2>
+
+      {{#if product.comments}}
+      <div class="commentBox">
+        {{#each product.comments}}
+        <div class="productComment">
+          <img class="is-pulled-left" src="{{this.comment_by_pic}}" style="max-height: 25px;margin-right: 10px;">
+          <h6 class="title is-5" style="/*! margin-left: 5px; */margin-bottom: 1px;"><b>{{this.comment_by}}</b></h6>
+          <p style="margin-left: 40px;margin-bottom: 0;">{{this.comment_content}}</p>
+                     <p style="margin-left: 40px;"><b>{{this.newTime}}</b></p>
+        </div>
+          {{/each}}
+        </div>
+      {{else}}
+        <p>No comments</p>
+      {{/if}}
+
+
+      {{#if user}}
+      <div>
+      <input type="hidden" name="productId" value="{{product._id}}"/>
+      <input type="hidden" name="userName" value="{{user.displayName}}"/>
+      <input type="hidden" name="userId" value="{{user._json.sub}}"/>
+      <input type="hidden" name="userPic" value="{{user.picture}}"/>
+      <div class="field">
+      <div class="control">
+          <textarea class="textarea" name ="comment" placeholder="Comment..."></textarea>
+      </div>
+      </div>
+      <button class="button is-success" name="postComment">Post Comment</button>
+      </div>
+      {{/if}}
+
+    </div>
+  </div>
+</div>
+
+<script> </script>

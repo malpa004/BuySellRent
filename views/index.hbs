@@ -1,0 +1,328 @@
+<div class="container">
+  <h1 class="header">Welcome to {{title}}</h1>
+  <input type="hidden" name="user-logged-in" value="{{user._json.sub}}"/>
+  <form action="/search" method="get">
+    <div class="columns is-gapless  is-mobile">
+      <div class="field column is-narrow">
+        <div class="control">
+          <div class="select">
+            <select id="select-category" name="category">
+              <option value="All">All</option>
+              <option value="Book">Book</option>
+              <option value="Furniture">Furniture</option>
+              <option value="Bike">Bike</option>
+              <option value="Apartment">Apartment</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="column">
+        <div class="searchbar">
+          <input class="input" type="text" placeholder="Search" name="sitem">
+        </div>
+      </div>
+      <div class="column is-narrow">
+        <div class="searchbutton">
+          <button class="button is-primary">
+            <span class="icon">
+              <i class="fa fa-search"></i>
+            </span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+
+  <div id="indexMainDiv" class="columns">
+    <div id="someProducts" class="column is-three-quarters">
+
+      <div class="categories">
+        <div>
+          <h1 class="is-pulled-left">Apartments</h1><a href="/search?category=Apartment">(See all)</a>
+          <span class="next-icon icon is-large" id="toggle-apartment">
+
+            <i class="fa fa-2x fa-chevron-down "></i>
+          </span>
+        </div>
+        <div class="columns" id="apartment-content" style="clear:both">
+          {{#each apartment}}
+          <div class="card home-page-card">
+          <div class="card-image">
+            <figure class="image is-4by3 allListingsImg">
+              <img src="/upload/view/{{this.displayImage}}">
+            </figure>
+          </div>
+          <div class="card-content">
+            <input type="hidden" name="id" value="{{this._id}}"/>
+            <div class="allListingsName">
+              <h1 class="title is-5"><b>{{this.name}}</b></h1>
+            </div>
+              {{#if this.rent}}
+              <h1 class="title is-6">${{this.price}} /month</h1>
+              {{else}}
+              <h1 class="title is-6">${{this.price}}</h1>
+              {{/if}}
+              <h6>Posted:{{this.newTime}}</h6>
+          </div>
+          <footer class="card-footer">
+            <a href="/product/{{this._id}}" class="card-footer-item">View Product</a>
+          </footer>
+          </div>
+        {{/each}}
+      </div>
+    </div>
+    <div  class="categories">
+      <hr>
+      <div>
+        <h1 class="is-pulled-left">Furniture</h1><a href="/search?category=Furniture">(See all)</a>
+        <span class="next-icon icon is-large" id="toggle-furniture">
+
+          <i class="fa fa-2x fa-chevron-down "></i>
+        </span>
+      </div>
+      <div class="columns" id="furniture-content" style="clear:both">
+        {{#each furniture}}
+        <div class="card home-page-card">
+        <div class="card-image">
+          <figure class="image is-4by3 allListingsImg">
+            <img src="/upload/view/{{this.displayImage}}">
+          </figure>
+        </div>
+        <div class="card-content">
+          <input type="hidden" name="id" value="{{this._id}}"/>
+          <div class="allListingsName">
+            <h1 class="title is-5"><b>{{this.name}}</b></h1>
+          </div>
+          {{#if this.rent}}
+          <h1 class="title is-6">${{this.price}} /month</h1>
+          {{else}}
+          <h1 class="title is-6">${{this.price}}</h1>
+          {{/if}}
+          <h6>Posted:{{this.newTime}}</h6>
+        </div>
+        <footer class="card-footer">
+          <a href="/product/{{this._id}}" class="card-footer-item">View Product</a>
+        </footer>
+        </div>
+      {{/each}}
+    </div>
+  </div>
+
+  <div class="categories">
+    <hr>
+    <div>
+      <h1 class="is-pulled-left">Books</h1><a href="/search?category=Book">(See all)</a>
+      <span class="next-icon icon is-large" id="toggle-book">
+
+        <i class="fa fa-2x fa-chevron-down "></i>
+      </span>
+    </div>
+    <div class="columns" id="book-content" style="clear:both">
+      {{#each book}}
+      <div class="card home-page-card">
+      <div class="card-image">
+        <figure class="image is-4by3 allListingsImg">
+          <img src="/upload/view/{{this.displayImage}}">
+        </figure>
+      </div>
+      <div class="card-content">
+        <input type="hidden" name="id" value="{{this._id}}"/>
+        <div class="allListingsName">
+          <h1 class="title is-5"><b>{{this.name}}</b></h1>
+        </div>
+        {{#if this.rent}}
+        <h1 class="title is-6">${{this.price}} /month</h1>
+        {{else}}
+        <h1 class="title is-6">${{this.price}}</h1>
+        {{/if}}
+        <h6>Posted:{{this.newTime}}</h6>
+      </div>
+      <footer class="card-footer">
+        <a href="/product/{{this._id}}" class="card-footer-item">View Product</a>
+      </footer>
+      </div>
+    {{/each}}
+  </div>
+</div>
+
+<div  class="categories">
+  <hr>
+  <div>
+    <h1 class="is-pulled-left">Bikes</h1><a href="/search?category=Bike">(See all)</a>
+    <span class="next-icon icon is-large" id="toggle-bike">
+
+      <i class="fa fa-2x fa-chevron-down "></i>
+    </span>
+  </div>
+  <div class="columns" id="bike-content" style="clear:both">
+    {{#each bike}}
+    <div class="card home-page-card">
+    <div class="card-image">
+      <figure class="image is-4by3 allListingsImg">
+        <img src="/upload/view/{{this.displayImage}}">
+      </figure>
+    </div>
+    <div class="card-content">
+      <input type="hidden" name="id" value="{{this._id}}"/>
+      <div class="allListingsName">
+        <h1 class="title is-5"><b>{{this.name}}</b></h1>
+      </div>
+      {{#if this.rent}}
+      <h1 class="title is-6">${{this.price}} /month</h1>
+      {{else}}
+      <h1 class="title is-6">${{this.price}}</h1>
+      {{/if}}
+      <h6>Posted:{{this.newTime}}</h6>
+    </div>
+    <footer class="card-footer">
+      <a href="/product/{{this._id}}" class="card-footer-item">View Product</a>
+    </footer>
+    </div>
+  {{/each}}
+</div>
+</div>
+<div class="categories">
+  <hr>
+  <div>
+    <h1 class="is-pulled-left">Others</h1><a href="/search?category=Other">(See all)</a>
+    <span class="next-icon icon is-large" id="toggle-other">
+
+      <i class="fa fa-2x fa-chevron-down "></i>
+    </span>
+  </div>
+  <div class="columns" id="other-content" style="clear:both">
+    {{#each other}}
+    <div class="card home-page-card">
+    <div class="card-image">
+      <figure class="image is-4by3 allListingsImg">
+        <img src="/upload/view/{{this.displayImage}}">
+      </figure>
+    </div>
+    <div class="card-content">
+      <input type="hidden" name="id" value="{{this._id}}"/>
+      <div class="allListingsName">
+        <h1 class="title is-5"><b>{{this.name}}</b></h1>
+      </div>
+      {{#if this.rent}}
+      <h1 class="title is-6">${{this.price}} /month</h1>
+      {{else}}
+      <h1 class="title is-6">${{this.price}}</h1>
+      {{/if}}
+      <h6>Posted:{{this.newTime}}</h6>
+    </div>
+    <footer class="card-footer">
+      <a href="/product/{{this._id}}" class="card-footer-item">View Product</a>
+    </footer>
+    </div>
+  {{/each}}
+</div>
+</div>
+</div>
+
+<div id="postIt" class="column is-one-quarter">
+  <h1 class="title">Post a request!</h1>
+  {{#if user}}
+  <button class="button is-success" type="submit" id="addRequest">Post Request</button>
+  {{/if}}
+  <div class="modal requestForm" id="postItForm">
+    <div class="modal-background"></div>
+    <div class="modal-card">
+      <header class="modal-card-head">
+        <p class="modal-card-title">Add request</p>
+        <button class="delete" aria-label="close" id="closeRequestForm"></button>
+      </header>
+
+      <section class="modal-card-body">
+        <div class="field">
+          <label class="label">Category</label>
+          <div class="control">
+            <div class="select">
+              <select id="category">
+                <option>Select category</option>
+                <option>Apartment</option>
+                <option>Furniture</option>
+                <option>Book</option>
+                <option>Bike</option>
+                <option>Other</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="field">
+          <label class="label">Requirement</label>
+          <div class="control has-icons-left has-icons-right">
+            <input class="input " type="text" placeholder="Name of the book, etc" id="requirement">
+          </div>
+        </div>
+        <div class="field">
+          <label class="label">Request message if any</label>
+          <div class="control">
+            <textarea class="textarea" placeholder="Textarea" id="requestMessage"></textarea>
+          </div>
+        </div>
+      </section>
+      <footer class="modal-card-foot">
+        <button class="button is-success" id="saveRequest">Save changes</button>
+      </footer>
+    </div>
+  </div>
+
+  <div id="requirementsList">
+    {{#each request}}
+    <div class="card">
+      <input type="hidden" name="postedBy" value="{{this.name}}">
+      <input type="hidden" name="item" value="{{this.requirement}}">
+      <input type="hidden" name="category" value="{{this.category}}">
+      <input type="hidden" name="email" value="{{this.email}}">
+      <header class="card-header">
+        <p class="card-header-title">Category - {{this.category}}
+          <br>
+          Requestor - {{this.name}}
+        </p>
+      </header>
+      <div class="card-content">
+        <div class="content">
+          <h3>{{this.requirement}}</h3>
+          <p>{{this.message}}</p>
+        </div>
+      </div>
+
+      <footer class="card-footer comment-if-user" style="display: none">
+        <a href="#" class="card-footer-item addComment">Comment</a>
+      </footer>
+
+    </div>
+    {{/each}}
+  </div>
+</div>
+</div>
+
+<div class="modal commentForm" id="replyCommentForm">
+  <div class="modal-background"></div>
+  <div class="modal-card">
+    <header class="modal-card-head">
+      <p class="modal-card-title">Contact Buyer</p>
+      <button class="delete" aria-label="close" id="closeCommentForm"></button>
+    </header>
+    <section class="modal-card-body">
+      <input type="hidden" id="commentEmail"/>
+      <h6><b id="buyer"></b></h6>
+      <div class="field">
+        <label id="sendMailTo" class="label">Subject</label>
+        <div class="control has-icons-left has-icons-right">
+          <input class="input " type="text" id="subject" />
+        </div>
+      </div>
+      <div class="control">
+        <label class="label">Message Content</label>
+        <textarea class="textarea" placeholder="Textarea" id="commentMessage"></textarea>
+      </div>
+    </section>
+    <footer class="modal-card-foot">
+      <button class="button is-success" id="saveComment">Contact Buyer</button>
+    </footer>
+  </div>
+</div>
+</div>
